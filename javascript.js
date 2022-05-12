@@ -24,6 +24,10 @@ function playerChoice() {
 
 //Function that plays one round with playerSelection and computerSelection
 function gameRound (playerSelection, computerSelection){
+    playerSelection = playerChoice();
+    computerSelection = computerPlay();
+// console.log(gameRound(playerSelection, computerSelection));
+    
     //rock cases
     if (playerSelection == 'rock' && computerSelection == 'scissors') {
         return 'Rock beats scissors! You win!'
@@ -48,6 +52,38 @@ function gameRound (playerSelection, computerSelection){
     }
 }
 
-playerSelection = playerChoice();
-computerSelection = computerPlay();
-console.log(gameRound(playerSelection, computerSelection));
+//Create a function called game() that plays 5 total games and keeps track of the score and reports the winner.
+
+function game(){
+    //initialize variables
+    let playerSelection;
+    let computerSelection;
+    let gameCounter = 0;
+    let playerScore = 0;
+    let computerScore = 0;
+
+    for (let i = 0; i < 5; i++) {
+
+        //Play one round and record result
+        testResults = gameRound(playerSelection, computerSelection);
+        gameCounter = ++gameCounter
+        if (testResults.includes('win')) {
+            playerScore = ++playerScore;
+        } else if (testResults.includes('lose')){
+            computerScore = ++computerScore;
+        }
+        //Report results each game.
+        alert(`Player score: ${playerScore} - Computer score ${computerScore} - Total games: ${gameCounter}`);
+    }
+    //Report match winner
+    if (playerScore > computerScore) {
+        alert(`The player wins with ${playerScore} wins!`)
+    } else if(playerScore < computerScore) {
+        alert(`The computer wins with ${computerScore} wins!`)
+    } else {
+        alert(`The game is a draw with ${playerScore} wins each.`)
+    }
+    
+}   
+
+game();
