@@ -19,21 +19,35 @@ function playerChoice() {
         userInput = prompt('Enter rock, paper, or scissors.')
         userInput = userInput.toLowerCase();
     }
-    console.log(userInput);
     return userInput;
 }
 
 //Function that plays one round with playerSelection and computerSelection
 function gameRound (playerSelection, computerSelection){
+    //rock cases
     if (playerSelection == 'rock' && computerSelection == 'scissors') {
         return 'Rock beats scissors! You win!'
     } else if (playerSelection == 'rock' && computerSelection == 'rock'){
         return 'Draw! Both players selected rock.'
-    } else if (playerSelection =='rock' ** computerSelection == 'paper') {
+    } else if (playerSelection =='rock' && computerSelection == 'paper') {
         return 'Paper beats rock! You lose.'
+    //paper cases
+    } else if (playerSelection == 'paper' && computerSelection == 'rock') {
+        return 'Paper beats rock! You win!'
+    } else if (playerSelection == 'paper' && computerSelection == 'paper'){
+        return 'Draw! Both players selected paper.'
+    } else if (playerSelection =='paper' && computerSelection == 'scissors') {
+        return 'Scissors beats paper! You lose.'
+    //scissors cases
+    }else if (playerSelection == 'scissors' && computerSelection == 'paper') {
+        return 'Scissors beats paper! You win!'
+    } else if (playerSelection == 'scissors' && computerSelection == 'scissors'){
+        return 'Draw! Both players selected scissors.'
+    } else if (playerSelection =='scissors' && computerSelection == 'rock') {
+        return 'Rock beats scissors! You lose.'
     }
 }
 
 playerSelection = playerChoice();
 computerSelection = computerPlay();
-gameRound(playerSelection(), computerSelection());
+console.log(gameRound(playerSelection, computerSelection));
