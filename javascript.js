@@ -61,17 +61,24 @@ function game(){
     let gameCounter = 0;
     let playerScore = 0;
     let computerScore = 0;
+    
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i <= 5; i++) {
 
         //Play one round and record result
         testResults = gameRound(playerSelection, computerSelection);
-        gameCounter = ++gameCounter
         if (testResults.includes('win')) {
             playerScore = ++playerScore;
         } else if (testResults.includes('lose')){
             computerScore = ++computerScore;
         }
+
+        if (playerScore >= computerScore) {
+            i = playerScore;
+        } else {
+            i = computerScore;
+        }
+        gameCounter = ++gameCounter 
         //Report results each game.
         alert(`Player score: ${playerScore} - Computer score ${computerScore} - Total games: ${gameCounter}`);
     }
