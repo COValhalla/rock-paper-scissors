@@ -1,40 +1,63 @@
-// create a function computerPlay that generates the computer's move
-function computerPlay(){
-    //Create an integer between 0 and 2
-    result = Math.floor(Math.random()*3)
-    //Assign random integer to each value and return the result
-    if (result === 0){
-        return 'rock'
-    }else if (result === 1){
-        return 'paper'
-    }else {
-        return 'scissors'
-    }
-}
+//declare variables
+let computerSelection;
+let playerSelection;
+let playerScore = 0;
+let computerScore = 0;
+let gameCounter = 0;
 
-//Takes players input and only accepts rock, paper, or scissors.
-function playerChoice() {
-    let userInput;
-    while (userInput != 'rock' && userInput != 'paper' && userInput != 'scissors'){
-        userInput = prompt('Enter rock, paper, or scissors.')
-        userInput = userInput.toLowerCase();
-    }
-    return userInput;
-}
+//Scoreboard initilization 
+const pScore = document.querySelector('.playerScore');
+pScore.textContent = `Player Score: ${playerScore}`;
+const cScore = document.querySelector('.computerScore');
+cScore.textContent = `Computer Score: ${computerScore}`;
+const tGames = document.querySelector('.totalGames');
+tGames.textContent = `Total Games: ${playerScore + computerScore}`;
 
-//Function that plays one round with playerSelection and computerSelection
+//Records player's result and updates scoreboard, on 5 wins announces winner and resets scoreboard
+const buttons = document.querySelectorAll('button');
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        playerSelection = button.id;
+        testResults = gameRound(playerSelection, computerSelection);
+
+        if (testResults.includes('win')) {
+            playerScore = ++playerScore;
+        } else if (testResults.includes('lose')) {
+            computerScore = ++computerScore;
+        }
+
+        if (playerScore >= computerScore) {
+            i = playerScore;
+        } else {
+            i = computerScore;
+        }
+        gameCounter = ++gameCounter
+        pScore.textContent = `Player Score: ${playerScore}`;
+        cScore.textContent = `Computer Score: ${computerScore}`;
+        tGames.textContent = `Total Games: ${gameCounter}`;
+
+
+        if (playerScore >= 5){
+            pScore.textContent = 'You win the match!';
+            playerScore = computerScore = gameCounter = 0;
+        } else if (computerScore >=5) {
+            cScore.textContent = 'The computer wins the match!';
+            playerScore = computerScore = gameCounter = 0;
+        }
+    })
+});
+
+//Play's one round, returns result
 function gameRound (playerSelection, computerSelection){
-    playerSelection = playerChoice();
     computerSelection = computerPlay();
-// console.log(gameRound(playerSelection, computerSelection));
-    
+
     //rock cases
     if (playerSelection == 'rock' && computerSelection == 'scissors') {
-        return 'Rock beats scissors! You win!'
+        return 'Rock beats scissors! You win!';
     } else if (playerSelection == 'rock' && computerSelection == 'rock'){
-        return 'Draw! Both players selected rock.'
+        return 'Draw! Both players selected rock.';
     } else if (playerSelection =='rock' && computerSelection == 'paper') {
-        return 'Paper beats rock! You lose.'
+        return 'Paper beats rock! You lose.';
     //paper cases
     } else if (playerSelection == 'paper' && computerSelection == 'rock') {
         return 'Paper beats rock! You win!'
@@ -52,45 +75,13 @@ function gameRound (playerSelection, computerSelection){
     }
 }
 
-//Create a function called game() that plays 5 total games and keeps track of the score and reports the winner.
-
-function game(){
-    //initialize variables
-    let playerSelection;
-    let computerSelection;
-    let gameCounter = 0;
-    let playerScore = 0;
-    let computerScore = 0;
-    
-
-    for (let i = 0; i <= 5; i++) {
-
-        //Play one round and record result
-        testResults = gameRound(playerSelection, computerSelection);
-        if (testResults.includes('win')) {
-            playerScore = ++playerScore;
-        } else if (testResults.includes('lose')){
-            computerScore = ++computerScore;
-        }
-
-        if (playerScore >= computerScore) {
-            i = playerScore;
-        } else {
-            i = computerScore;
-        }
-        gameCounter = ++gameCounter 
-        //Report results each game.
-        alert(`Player score: ${playerScore} - Computer score ${computerScore} - Total games: ${gameCounter}`);
+function computerPlay(){//Records computer round result
+    result = Math.floor(Math.random()*3)
+    if (result === 0){
+        return 'rock'
+    }else if (result === 1){
+        return 'paper'
+    }else {
+        return 'scissors'
     }
-    //Report match winner
-    if (playerScore > computerScore) {
-        alert(`The player wins with ${playerScore} wins!`)
-    } else if(playerScore < computerScore) {
-        alert(`The computer wins with ${computerScore} wins!`)
-    } else {
-        alert(`The game is a draw with ${playerScore} wins each.`)
-    }
-    
-}   
-
-game();
+};
